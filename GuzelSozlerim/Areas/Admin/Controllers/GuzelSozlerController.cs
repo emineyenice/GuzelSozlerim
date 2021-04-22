@@ -150,6 +150,7 @@ namespace GuzelSozlerim.Areas.Admin.Controllers
         {
             return _context.GuzelSozler.Any(e => e.Id == id);
         }
+
         //public override void OnActionExecuting(ActionExecutingContext context)
         //{
         //    ViewBag.GuzelSozler = "active";
