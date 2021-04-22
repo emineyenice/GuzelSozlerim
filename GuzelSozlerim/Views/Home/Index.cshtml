@@ -16,24 +16,29 @@
     <div>
         @foreach (var item in Model)
         {
-            bool begenildi = User.Identity.IsAuthenticated && item.Begenenler.Any(x => x.KullaniciId == User.GetUserId());
-            <div class="card mb-3 @(begenildi ? "card-begenildi" : "card-begenilmedi")">
-                <div class="card-body d-flex align-items-center">
-                    <div>
-                        <p>
-                            @item.Soz
-                        </p>
-                        <div class="small text-secondary">
+            bool begenildi = User.Identity.IsAuthenticated
+                && item.Begenenler.Any(x => x.KullaniciId == User.GetUserId());
+            string begenenler = string.Join("<br>", item.Begenenler.Select(x => x.Kullanici.GorunenAd));
+        <div class="card mb-3 @(begenildi ? "card-begenildi" : "card-begenilmedi")">
+            <div class="card-body d-flex align-items-center">
+                <div>
+                    <p class="mb-1">
+                        @item.Soz
+                    </p>
+                    <div class="small text-secondary">
+                        <a href="#" data-html="true" data-toggle="tooltip" data-placement="bottom" title="@begenenler">
                             <span data-begeni-adet-id="@item.Id">
                                 @item.Begenenler.Count
-                            </span> kişi bunu beğendi
-                        </div>
+                            </span> kişi
+                        </a> bunu beğendi.
                     </div>
-                    <a href="" class="btn btn-outline-danger ml-auto" title="@BegenTitle(begenildi)" data-begen-id="@item.Id" data-begenildi="@begenildi.ToString().ToLower()" data-toggle="tooltip">
-                        <i class="@(begenildi ? "fas" : "far") fa-heart"></i>
-                    </a>
                 </div>
+                <a href="#" class="btn btn-outline-danger ml-auto"
+                   title="@BegenTitle(begenildi)" data-begen-id="@item.Id" data-begenildi="@begenildi.ToString().ToLower()" data-toggle="tooltip">
+                    <i class="@(begenildi ? "fas" : "far") fa-heart"></i>
+                </a>
             </div>
+        </div>
         }
     </div>
 </div>
